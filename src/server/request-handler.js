@@ -44,9 +44,6 @@ function validateQuery(res, query) {
             isInvalidQuery = true;
             errorMessage = 'Parameter [days] exceeds limit (500)';
             break;
-        default:
-            isInvalidQuery = true;
-            errorMessage = 'Invalid request';
     }
 
     if (isInvalidQuery){
