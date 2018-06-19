@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/epps/.nvm/versions/node/v9.11.1/bin/node /Users/epps/.nvm/versions/node/v9.11.1/bin/yarn run watch
+  /Users/epps/.nvm/versions/node/v9.11.1/bin/node /Users/epps/.nvm/versions/node/v9.11.1/bin/yarn run start
 
 PATH: 
   /Users/epps/.nvm/versions/node/v9.11.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -23,7 +23,7 @@ npm manifest:
     "license": "MIT",
     "scripts": {
       "start": "node ./src/index.js",
-      "watch": "nodemone ./src/index.js"
+      "watch": "nodemon ./src/index.js"
     },
     "devDependencies": {
       "nodemon": "^1.17.5"
@@ -1554,9 +1554,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 127
+  Exit code: 1
   Command: sh
-  Arguments: -c nodemone ./src/index.js
+  Arguments: -c node ./src/index.js
   Directory: /Users/epps/code/banana-budget-calculator
   Output:
   

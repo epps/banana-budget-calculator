@@ -5,16 +5,16 @@ const calculateBananaBudget = require('../services/banana-budget-calculator.serv
 
 function handleApiRequest(req, res) {
     const parsedUrl = url.parse(req.url, true);
-    console.log(parsedUrl);
+
     switch (parsedUrl.pathname) {
         case '/api/banana-budget':
             const query = parsedUrl.query;
-            validateQuery(query);
 
-            const budget = calculateBananaBudget(query['start-date'], query['days']);
-
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ totalCost: `$${budget}`}));
+            if (validateQuery(res, query)) {
+                const budget = calculateBananaBudget(query['start-date'], query['days']);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ totalCost: `$${budget}`}));
+            } 
 
             break;
         default:
@@ -23,20 +23,38 @@ function handleApiRequest(req, res) {
     }
 }
 
-function validateQuery(query) {
-    if (!Object.prototype.hasOwnProperty.call(query, 'start-date') || !util.validateDateString(query['start-date'])) {
-        res.writeHead(400);
-        res.end('Missing or invalid [start-date]');
+function validateQuery(res, query) {
+    let isInvalidQuery = false;
+    let errorMessage = '';
+
+    switch(true) {
+        case !Object.prototype.hasOwnProperty.call(query, 'start-date') && !Object.prototype.hasOwnProperty.call(query, 'days'):
+            isInvalidQuery = true;
+            errorMessage = 'Missing or params [start-date, days]';
+            break;
+        case !Object.prototype.hasOwnProperty.call(query, 'start-date') || !util.validateDateString(query['start-date']):
+            isInvalidQuery = true;
+            errorMessage = 'Missing or invalid [start-date]';
+            break;
+        case !Object.prototype.hasOwnProperty.call(query, 'days'):
+            isInvalidQuery = true;
+            errorMessage = 'Missing required parameter [days]';
+            break;
+        case query['days'] > 500:
+            isInvalidQuery = true;
+            errorMessage = 'Parameter [days] exceeds limit (500)';
+            break;
+        default:
+            isInvalidQuery = true;
+            errorMessage = 'Invalid request';
     }
 
-    if (!Object.prototype.hasOwnProperty.call(query, 'days')) {
+    if (isInvalidQuery){
         res.writeHead(400);
-        res.end('Missing required paramerter [days]');
-    }
-
-    if (query['days'] > 500) {
-        res.writeHead(400);
-        res.end('Parameter [days] exceeds limit (500)');
+        res.end(errorMessage);
+        return false;
+    } else {
+        return true;
     }
 }
 
