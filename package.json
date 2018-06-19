@@ -1,0 +1,11 @@
+{
+  "name": "banana-budget-calculator",
+  "version": "1.0.0",
+  "description": "A lightweight microservice API to calculate Bob's banana budget.",
+  "main": "./src/index.js",
+  "author": "Erik Eppel",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/index.js"
+  }
+}
