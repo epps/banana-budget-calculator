@@ -6,6 +6,10 @@
   "author": "Erik Eppel",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "watch": "nodemon ./src/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
   }
 }
