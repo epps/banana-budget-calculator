@@ -15,7 +15,7 @@ function handleApiRequest(req, res) {
                 const budget = bananaBudgetService.getBudgetForDays(query['days']);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ totalCost: budget }));
-            } 
+            }
 
             break;
         default:
@@ -28,7 +28,7 @@ function validateQuery(res, query) {
     let isInvalidQuery = false;
     let errorMessage = '';
 
-    switch(true) {
+    switch (true) {
         case !Object.prototype.hasOwnProperty.call(query, 'start-date') && !Object.prototype.hasOwnProperty.call(query, 'days'):
             isInvalidQuery = true;
             errorMessage = 'Missing or params [start-date, days]';
@@ -47,7 +47,7 @@ function validateQuery(res, query) {
             break;
     }
 
-    if (isInvalidQuery){
+    if (isInvalidQuery) {
         res.writeHead(400);
         res.end(errorMessage);
         return false;

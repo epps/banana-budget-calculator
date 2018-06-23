@@ -1,5 +1,5 @@
 class BananaBudgetService {
-	
+
 	constructor(start) {
 		this.startDate = new Date(start);
 	}
@@ -33,10 +33,9 @@ class BananaBudgetService {
 			4: 0.20,
 			5: 0.25
 		};
-	
+
 		return weeksToPrice[Math.ceil(this.startDate.getDate() / 7)];
 	}
 }
-  
-  module.exports = BananaBudgetService;
-  
+
+module.exports = BananaBudgetService;
