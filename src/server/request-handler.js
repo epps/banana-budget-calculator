@@ -1,7 +1,7 @@
 const url = require('url');
 
 const util = require('./utilities');
-const calculateBananaBudget = require('../services/banana-budget-calculator.service');
+const BananaBudgetService = require('../services/banana-budget.service');
 
 function handleApiRequest(req, res) {
     const parsedUrl = url.parse(req.url, true);
@@ -11,9 +11,10 @@ function handleApiRequest(req, res) {
             const query = parsedUrl.query;
 
             if (validateQuery(res, query)) {
-                const budget = calculateBananaBudget(query['start-date'], query['days']);
+                const bananaBudgetService = new BananaBudgetService(query['start-date']);
+                const budget = bananaBudgetService.getBudgetForDays(query['days']);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ totalCost: `$${budget}`}));
+                res.end(JSON.stringify({ totalCost: budget }));
             } 
 
             break;
